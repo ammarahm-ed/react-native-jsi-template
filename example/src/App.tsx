@@ -1,14 +1,17 @@
 import * as React from 'react';
-
 import { StyleSheet, View, Text } from 'react-native';
-import SimpleJsi from 'react-native-simple-jsi';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
   React.useEffect(() => {
-    SimpleJsi.multiply(3, 7).then(setResult);
+    setResult(global.helloWorld())
   }, []);
+
+
+  global.callbackTest(2,4,(a) => {
+    console.log(a,"got value"); 
+  })
 
   return (
     <View style={styles.container}>
@@ -16,6 +19,7 @@ export default function App() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

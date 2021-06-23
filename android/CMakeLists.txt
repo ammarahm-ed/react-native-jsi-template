@@ -1,15 +1,34 @@
-cmake_minimum_required(VERSION 3.4.1)
-
-set (CMAKE_VERBOSE_MAKEFILE ON)
-set (CMAKE_CXX_STANDARD 11)
+cmake_minimum_required(VERSION 3.9.0)
 
 add_library(cpp
             SHARED
             ../cpp/example.cpp
-            cpp-adapter.cpp
+            ./cpp-adapter.cpp
+            ../../react-native/ReactCommon/jsi/jsi/jsi.cpp
 )
 
-# Specifies a path to native header files.
 include_directories(
+            ../../react-native/React
+            ../../react-native/React/Base
+            ../../react-native/ReactCommon/jsi
             ../cpp
+)
+
+set_target_properties(
+        cpp PROPERTIES
+        CXX_STANDARD 17
+        CXX_EXTENSIONS OFF
+        POSITION_INDEPENDENT_CODE ON
+)
+
+find_library(
+        log-lib
+        log
+)
+
+target_link_libraries(
+        cpp
+        ${log-lib}
+        core
+        android
 )

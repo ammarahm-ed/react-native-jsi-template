@@ -1,0 +1,26 @@
+[
+  {
+    "level": "INFO",
+    "message": "Start JSON generation. Platform version: 16 min SDK version: x86"
+  },
+  {
+    "level": "INFO",
+    "message": "Trying to locate CMake in local SDK repository."
+  },
+  {
+    "level": "INFO",
+    "message": "- CMake found in SDK at \u0027/Users/ammarahmed/Library/Android/sdk/cmake/3.10.2.4988404\u0027 had version \u00273.10.2\u0027"
+  },
+  {
+    "level": "INFO",
+    "message": "CMake \u00273.6.0\u0027 found in SDK could not satisfy requested version \u00273.8.0\u0027 because it was lower."
+  },
+  {
+    "level": "INFO",
+    "message": "JSON \u0027/Users/ammarahmed/Repos/react-native-simple-jsi/example/node_modules/react-native-simple-jsi/android/.cxx/cmake/debug/x86/android_gradle_build.json\u0027 was up-to-date"
+  },
+  {
+    "level": "INFO",
+    "message": "JSON generation completed without problems"
+  }
+]
