@@ -21,14 +21,7 @@ set_target_properties(
         POSITION_INDEPENDENT_CODE ON
 )
 
-find_library(
-        log-lib
-        log
-)
-
 target_link_libraries(
         cpp
-        ${log-lib}
-        core
         android
 )
