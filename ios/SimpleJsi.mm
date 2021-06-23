@@ -4,11 +4,6 @@
 #import <jsi/jsi.h>
 #import "example.h"
 
-using namespace facebook;
-using namespace jsi;
-using namespace std;
-
-
 @implementation SimpleJsi
 
 @synthesize bridge = _bridge;
@@ -45,7 +40,8 @@ RCT_EXPORT_MODULE()
         });
         return;
     }
-    example::install(*(Runtime *)cxxBridge.runtime);
+    
+    example::install(*(facebook::jsi::Runtime *)cxxBridge.runtime);
 }
 
 
