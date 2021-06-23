@@ -1,6 +1,6 @@
 # react-native-simple-jsi
 
-How to build a jsi module example library
+This is an example library that explains how anyone can build jsi modules. This code is written as a support project for my upcoming blog.
 
 ## Installation
 
@@ -9,14 +9,7 @@ npm install react-native-simple-jsi
 ```
 
 ## Usage
-
-```js
-import SimpleJsi from "react-native-simple-jsi";
-
-// ...
-
-const result = await SimpleJsi.multiply(3, 7);
-```
+See example app.
 
 ## Contributing
 
