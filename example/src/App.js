@@ -8,11 +8,6 @@ export default function App() {
     setResult(global.helloWorld())
   }, []);
 
-
-  global.callbackTest(2,4,(a) => {
-    console.log(a,"got value"); 
-  })
-
   return (
     <View style={styles.container}>
       <Text>Result: {result}</Text>
