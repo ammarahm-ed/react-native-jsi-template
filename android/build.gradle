@@ -1,72 +1,121 @@
-buildscript {
-  if (project == rootProject) {
-    repositories {
-      google()
-      jcenter()
-    }
+import groovy.json.JsonSlurper
+import org.apache.tools.ant.filters.ReplaceTokens
 
-    dependencies {
-      classpath 'com.android.tools.build:gradle:3.5.3'
+buildscript {
+  // The Android Gradle plugin is only required when opening the android folder stand-alone.
+  // This avoids unnecessary downloads and potential conflicts when the library is included as a
+  // module dependency in an application project.
+  //if (project == rootProject) {
+  repositories {
+    google()
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
   }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:4.1.3'
+  }
+  //}
 }
 
 apply plugin: 'com.android.library'
 
-def safeExtGet(prop, fallback) {
-  rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+def getExtOrDefault(name, defaultValue) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : defaultValue
 }
 
 android {
-  compileSdkVersion safeExtGet('SimpleJsi_compileSdkVersion', 29)
-  buildToolsVersion safeExtGet('SimpleJsi_buildToolsVersion', '29.0.2')
+  compileSdkVersion getExtOrDefault('compileSdkVersion', 28)
+
   defaultConfig {
-    minSdkVersion safeExtGet('SimpleJsi_minSdkVersion', 16)
-    targetSdkVersion safeExtGet('SimpleJsi_targetSdkVersion', 29)
-    versionCode 1
-    versionName "1.0"
+    minSdkVersion getExtOrDefault('minSdkVersion', 16)
+    targetSdkVersion getExtOrDefault('targetSdkVersion', 28)
 
     externalNativeBuild {
       cmake {
-        cppFlags "-O2 -frtti -fexceptions -Wall -fstack-protector-all"
+        cppFlags "-fexceptions", "-frtti", "-std=c++1y", "-DONANDROID"
         abiFilters 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+        arguments '-DANDROID_STL=c++_shared', "-DNODE_MODULES_DIR=${rootDir}/../node_modules"
       }
     }
+  }
 
+  lintOptions{
+    abortOnError false
   }
 
   externalNativeBuild {
     cmake {
-      path "./CMakeLists.txt"
-      version "3.8.0+"
+      path "CMakeLists.txt"
     }
   }
 
-  buildTypes {
-    release {
-      minifyEnabled false
-    }
+  packagingOptions {
+    excludes = ["**/libc++_shared.so"]
   }
-  lintOptions {
-    disable 'GradleCompatible'
-  }
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+  
+  configurations {
+    extractHeaders
+    extractJNI
   }
 }
 
 repositories {
-  mavenLocal()
+  google()
   maven {
     // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-    url("$rootDir/../node_modules/react-native/android")
+    url "$rootDir/../node_modules/react-native/android"
   }
-  google()
   jcenter()
 }
 
 dependencies {
   //noinspection GradleDynamicVersion
-  implementation "com.facebook.react:react-native:+"  // From node_modules
+  implementation 'com.facebook.react:react-native:+'
+
+  def rnAAR = fileTree("${rootDir}/../node_modules/react-native/android").matching({ it.include "**/**/*.aar" }).singleFile
+  
+  def inputFile = new File(rootDir, '../node_modules/react-native/package.json')
+  def json = new JsonSlurper().parseText(inputFile.text)
+  def reactNativeVersion = json.version as String
+  def (major, minor, patch) = reactNativeVersion.tokenize('.')
+  extractJNI(files(rnAAR))
+}
+
+// fbjni
+// https://github.com/facebookincubator/fbjni/blob/master/docs/android_setup.md
+
+task extractAARHeaders {
+  doLast {
+    configurations.extractHeaders.files.each {
+      def file = it.absoluteFile
+      copy {
+        from zipTree(file)
+        into "$buildDir/$file.name"
+        include "**/*.h"
+      }
+    }
+  }
+}
+
+task extractJNIFiles {
+  doLast {
+    configurations.extractJNI.files.each {
+      def file = it.absoluteFile
+
+      copy {
+        from zipTree(file)
+        into "$buildDir/$file.name"
+        include "jni/**/*"
+      }
+    }
+  }
+}
+
+tasks.whenTaskAdded { task ->
+  if (task.name.contains('externalNativeBuild')) {
+    task.dependsOn(extractAARHeaders)
+    task.dependsOn(extractJNIFiles)
+  }
 }
