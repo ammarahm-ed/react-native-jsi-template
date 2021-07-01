@@ -28,6 +28,13 @@ RCT_EXPORT_MODULE()
     
     if (!cxxBridge.runtime) {
         
+        /**
+        * This is a workaround to install library
+        * as soon as runtime becomes available and is
+        * not recommended. If you see random crashes in iOS
+        * global.xxx not found etc. use this.
+        */
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.001 * NSEC_PER_SEC),
                        dispatch_get_main_queue(), ^{
             /**
