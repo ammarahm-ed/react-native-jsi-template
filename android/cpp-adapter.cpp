@@ -78,6 +78,11 @@ JNIEnv *GetJniEnv() {
 }
 
 
+static jstring string2jstring(JNIEnv *env, const string &str) {
+    return (*env).NewStringUTF(str.c_str());
+}
+
+
 void install(facebook::jsi::Runtime &jsiRuntime) {
 
     auto getDeviceName = Function::createFromHostFunction(jsiRuntime,
@@ -128,17 +133,24 @@ void install(facebook::jsi::Runtime &jsiRuntime) {
 
                                                         java_class = jniEnv->GetObjectClass(
                                                                 java_object);
+
+
                                                         jmethodID set = jniEnv->GetMethodID(
-                                                                java_class,"setItem","(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;");
+                                                                java_class, "setItem",
+                                                                "(Ljava/lang/String;Ljava/lang/String;)V");
 
-                                                        jobject result = jniEnv->CallObjectMethod(
-                                                                java_object, set);
-                                                        const char *str = jniEnv->GetStringUTFChars(
-                                                                (jstring) result, NULL);
+                                                        jstring jstr1 = string2jstring(jniEnv,
+                                                                                       key);
+                                                        jstring jstr2 = string2jstring(jniEnv,
+                                                                                       value);
+                                                        jvalue params[2];
+                                                        params[0].l = jstr1;
+                                                        params[1].l = jstr2;
 
-                                                        return Value(runtime,
-                                                                     String::createFromUtf8(
-                                                                             runtime, str));
+                                                        jniEnv->CallVoidMethodA(
+                                                                java_object, set, params);
+
+                                                        return Value(true);
 
                                                     });
 
@@ -148,26 +160,32 @@ void install(facebook::jsi::Runtime &jsiRuntime) {
     auto getItem = Function::createFromHostFunction(jsiRuntime,
                                                     PropNameID::forAscii(jsiRuntime,
                                                                          "getItem"),
-                                                    2,
+                                                    1,
                                                     [](Runtime &runtime,
                                                        const Value &thisValue,
                                                        const Value *arguments,
                                                        size_t count) -> Value {
 
                                                         string key = arguments[0].getString(
-                                                                runtime).utf8(runtime);
-                                                        string value = arguments[1].getString(
-                                                                runtime).utf8(runtime);
+                                                                        runtime)
+                                                                .utf8(
+                                                                        runtime);
 
                                                         JNIEnv *jniEnv = GetJniEnv();
 
                                                         java_class = jniEnv->GetObjectClass(
                                                                 java_object);
                                                         jmethodID get = jniEnv->GetMethodID(
-                                                                java_class,"setItem","(Ljava/lang/String;)Ljava/lang/String;");
+                                                                java_class, "getItem",
+                                                                "(Ljava/lang/String;)Ljava/lang/String;");
 
-                                                        jobject result = jniEnv->CallObjectMethod(
-                                                                java_object, get);
+                                                        jstring jstr1 = string2jstring(jniEnv,
+                                                                                       key);
+                                                        jvalue params[2];
+                                                        params[0].l = jstr1;
+
+                                                        jobject result = jniEnv->CallObjectMethodA(
+                                                                java_object, get, params);
                                                         const char *str = jniEnv->GetStringUTFChars(
                                                                 (jstring) result, NULL);
 

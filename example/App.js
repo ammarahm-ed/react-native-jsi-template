@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 export default function App() {
   const [result, setResult] = React.useState();
   const [deviceName,setDeviceName] = React.useState();
+  const [getItemValue,setGetItemValue] = React.useState();
 
   React.useEffect(() => {
     setResult(global.helloWorld())
@@ -26,6 +27,30 @@ export default function App() {
           Device Name: {deviceName}
         </Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          global.setItem('helloworld',"Hello World");
+        }}
+        style={styles.button}
+      >
+        <Text style={styles.buttonTxt}>
+          setItem: "Hello World"
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          setGetItemValue(global.getItem("helloworld"));
+        }}
+        style={styles.button}
+      >
+        <Text style={styles.buttonTxt}>
+          getItem: {getItemValue}
+        </Text>
+      </TouchableOpacity>
+
+
     </View>
   );
 }
@@ -50,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:5,
-    marginTop:10
+    marginVertical:10
 
   },
   buttonTxt: {

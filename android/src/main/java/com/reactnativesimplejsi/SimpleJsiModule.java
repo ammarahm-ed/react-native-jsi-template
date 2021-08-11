@@ -59,6 +59,7 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
   }
 
   public void setItem(final String key, final String value) {
+
     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getReactApplicationContext());
     SharedPreferences.Editor editor = preferences.edit();
     editor.putString(key,value);
