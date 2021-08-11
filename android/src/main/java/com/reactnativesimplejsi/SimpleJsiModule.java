@@ -1,5 +1,8 @@
 package com.reactnativesimplejsi;
 
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -43,6 +46,29 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
       Log.e("SimpleJsiModule", "JSI Runtime is not available in debug mode");
     }
 
+  }
+
+  public String getModel() {
+    String manufacturer = Build.MANUFACTURER;
+    String model = Build.MODEL;
+    if (model.startsWith(manufacturer)) {
+      return model;
+    } else {
+      return manufacturer + " " + model;
+    }
+  }
+
+  public void setItem(final String key, final String value) {
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getReactApplicationContext());
+    SharedPreferences.Editor editor = preferences.edit();
+    editor.putString(key,value);
+    editor.apply();
+  }
+
+  public String getItem(final String key) {
+    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getReactApplicationContext());
+    String value = preferences.getString(key, "");
+    return value;
   }
 
 }
