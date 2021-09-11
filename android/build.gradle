@@ -52,7 +52,7 @@ android {
   }
 
   packagingOptions {
-    excludes = ["**/libc++_shared.so"]
+    excludes = ["**/libc++_shared.so","**/libreactnativeutilsjni.so"]
   }
   
   configurations {
