@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import simpleJsiModule from "react-native-jsi-template";
 
 export default function App() {
   const [result, setResult] = React.useState();
@@ -7,7 +8,8 @@ export default function App() {
   const [getItemValue,setGetItemValue] = React.useState();
 
   React.useEffect(() => {
-    setResult(global.helloWorld())
+    
+    setResult(simpleJsiModule.helloWorld())
   }, []);
 
   return (
@@ -17,7 +19,7 @@ export default function App() {
       <TouchableOpacity
         onPress={() => {
           let perf = performance.now();
-          let value = global.getDeviceName();
+          let value = simpleJsiModule.getDeviceName();
           console.log(performance.now() - perf);
           setDeviceName(value);
         }}
@@ -30,7 +32,7 @@ export default function App() {
 
       <TouchableOpacity
         onPress={() => {
-          global.setItem('helloworld',"Hello World");
+          simpleJsiModule.setItem('helloworld',"Hello World");
         }}
         style={styles.button}
       >
@@ -41,7 +43,7 @@ export default function App() {
 
       <TouchableOpacity
         onPress={() => {
-          setGetItemValue(global.getItem("helloworld"));
+          setGetItemValue(simpleJsiModule.getItem("helloworld"));
         }}
         style={styles.button}
       >
