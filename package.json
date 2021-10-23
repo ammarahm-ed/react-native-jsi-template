@@ -1,5 +1,5 @@
 {
-  "name": "react-native-simple-jsi",
+  "name": "react-native-jsi-template",
   "version": "0.1.0",
   "description": "How to build a jsi module example library",
   "main": "lib/commonjs/index",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-simple-jsi.podspec",
+    "react-native-jsi-template.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -36,13 +36,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/ammarahm-ed/react-native-simple-jsi",
+  "repository": "https://github.com/ammarahm-ed/react-native-jsi-template",
   "author": "ammarahm-ed <ammarahmed6506@gmail.com> (https://github.com/ammarahm-ed)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ammarahm-ed/react-native-simple-jsi/issues"
+    "url": "https://github.com/ammarahm-ed/react-native-jsi-template/issues"
   },
-  "homepage": "https://github.com/ammarahm-ed/react-native-simple-jsi#readme",
+  "homepage": "https://github.com/ammarahm-ed/react-native-jsi-template#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
