@@ -1,3 +1,0 @@
-/Users/ammarahmed/Repos/react-native-simple-jsi/example/node_modules/react-native-simple-jsi/android/.cxx/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
-/Users/ammarahmed/Repos/react-native-simple-jsi/example/node_modules/react-native-simple-jsi/android/.cxx/cmake/debug/x86/CMakeFiles/edit_cache.dir
-/Users/ammarahmed/Repos/react-native-simple-jsi/example/node_modules/react-native-simple-jsi/android/.cxx/cmake/debug/x86/CMakeFiles/cpp.dir
