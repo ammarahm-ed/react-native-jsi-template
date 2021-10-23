@@ -35,6 +35,8 @@ project.xcworkspace
 .gradle
 local.properties
 android.iml
+android/.cxx
+*.hprof
 
 # Cocoapods
 #
