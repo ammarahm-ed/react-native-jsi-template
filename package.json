@@ -2,7 +2,7 @@
   "name": "react-native-jsi-template",
   "version": "0.2.0",
   "description": "How to build a jsi module example library",
-  "main": "src/index.ts",
+  "main": "src/index.tsx",
   "files": [
     "src",
     "lib",
