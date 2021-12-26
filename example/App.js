@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginHorizontal: 20,
   },
   title: {
     fontSize: 16,
@@ -119,5 +118,6 @@ const styles = StyleSheet.create({
   },
   item: {
     marginTop: 20,
+    marginHorizontal: 20,
   },
 });
