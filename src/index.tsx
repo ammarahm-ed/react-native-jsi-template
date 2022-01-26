@@ -7,7 +7,7 @@ import {NativeModules} from "react-native";
 // https://github.com/mrousavy/react-native-mmkv
 
 function isLoaded() {
-    return typeof simpleJsiModule.getItem !== 'function'
+    return typeof simpleJsiModule.getItem === 'function'
 }
 
 if (!isLoaded()) {
