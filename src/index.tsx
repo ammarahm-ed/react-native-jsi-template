@@ -1,6 +1,26 @@
 //@ts-ignore we want to ignore everything
 // else in global except what we need to access.
 // Maybe there is a better way to do this.
+import {NativeModules} from "react-native";
+
+// Installing JSI Bindings as done by
+// https://github.com/mrousavy/react-native-mmkv
+
+function isLoaded() {
+    return typeof simpleJsiModule.getItem !== 'function'
+}
+
+if (!isLoaded()) {
+    const result =  NativeModules.SimpleJsi.install();
+    if (!result) throw new Error("JSI bindings were not installed for: SimpleJsi Module");
+
+    if (!isLoaded()) {
+        throw new Error("JSI bindings were not installed for: SimpleJsi Module");
+    }
+
+}
+
+
 const simpleJsiModule:{
     helloWorld():string;
     multiplyWithCallback(x:number,y:number,callback:(z:number) => void):void
@@ -10,5 +30,6 @@ const simpleJsiModule:{
     getItem(key:string):string
     //@ts-ignore
 } = global;
+
 
 export default simpleJsiModule;
