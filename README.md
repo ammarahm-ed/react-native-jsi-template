@@ -7,6 +7,8 @@ This is an example library that explains how anyone can build jsi modules from s
 ```sh
 npm install react-native-simple-jsi
 ```
+For iOS also run `pod install` in `/ios` folder.
+
 
 ## Prerequisites
 You must have Android NDK and CMake installed on android to build the library.
@@ -41,6 +43,13 @@ import simpleJsiModule from "react-native-jsi-template";
 simpleJsiModule.helloWorld() // returns helloworld.
 ```
 Run the example app for more.
+
+
+## Thanks to these libraries & their authors:
+The initial work done by authors of the following libraries has helped a lot in writing the blog and keeping this repo updated.
+
+- [react-native-mmkv](https://github.com/mrousavy/react-native-mmkv/)
+- [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated/)
 
 ## Contributing
 
