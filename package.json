@@ -1,8 +1,8 @@
 {
   "name": "react-native-jsi-template",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "How to build a jsi module example library",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "files": [
     "src",
     "lib",
@@ -73,12 +73,6 @@
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint && yarn typescript"
-    }
   },
   "commitlint": {
     "extends": [
