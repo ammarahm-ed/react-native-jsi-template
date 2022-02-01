@@ -11,7 +11,7 @@ target 'example' do
     # to enable hermes on iOS, change `false` to `true` and then install pods
     :hermes_enabled => false
   )
-
+  
   target 'exampleTests' do
     inherit! :complete
     # Pods for testing
@@ -25,5 +25,6 @@ target 'example' do
 
   post_install do |installer|
     react_native_post_install(installer)
+    __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
 end

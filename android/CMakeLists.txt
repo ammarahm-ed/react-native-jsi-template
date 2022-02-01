@@ -14,23 +14,25 @@ include_directories(
 
 file (GLOB LIBRN_DIR "${BUILD_DIR}/react-native-0*/jni/${ANDROID_ABI}")
 
-if (JSI_LIB)
+if (EXISTS "${LIBRN_DIR}/libjsi.so")
   # React Native 0.66.x and above
+
+  find_library(
+          JSI_LIB
+          jsi
+          PATHS ${LIBRN_DIR}
+          NO_CMAKE_FIND_ROOT_PATH
+  )
+
   add_library(
           ${PACKAGE_NAME}
           SHARED
           ../cpp/example.cpp
           ./cpp-adapter.cpp
   )
-
-  find_library(
-        JSI_LIB
-        jsi
-        PATHS ${LIBRN_DIR}
-        NO_CMAKE_FIND_ROOT_PATH
-  )
 else()
   # React Native 0.65.x and below
+  set (JSI_LIB "")
   add_library(
           ${PACKAGE_NAME}
           SHARED

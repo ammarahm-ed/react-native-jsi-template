@@ -1,62 +1,48 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import simpleJsiModule from "react-native-jsi-template";
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import simpleJsiModule, {isLoaded} from 'react-native-jsi-template';
 
 export default function App() {
   const [result, setResult] = React.useState();
-  const [deviceName,setDeviceName] = React.useState();
-  const [getItemValue,setGetItemValue] = React.useState();
+  const [deviceName, setDeviceName] = React.useState();
+  const [getItemValue, setGetItemValue] = React.useState();
 
   React.useEffect(() => {
-    
-    setResult(simpleJsiModule.helloWorld())
+    setResult(simpleJsiModule.helloWorld());
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text >Result: {result}</Text>
+      <Text>Bindings Installed: {isLoaded().toString()}</Text>
+      <Text>Result: {result}</Text>
 
       <TouchableOpacity
         onPress={() => {
-          let perf = performance.now();
           let value = simpleJsiModule.getDeviceName();
-          console.log(performance.now() - perf);
           setDeviceName(value);
         }}
-        style={styles.button}
-      >
-        <Text style={styles.buttonTxt}>
-          Device Name: {deviceName}
-        </Text>
+        style={styles.button}>
+        <Text style={styles.buttonTxt}>Device Name: {deviceName}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => {
-          simpleJsiModule.setItem('helloworld',"Hello World");
+          simpleJsiModule.setItem('helloworld', 'Hello World');
         }}
-        style={styles.button}
-      >
-        <Text style={styles.buttonTxt}>
-          setItem: "Hello World"
-        </Text>
+        style={styles.button}>
+        <Text style={styles.buttonTxt}>setItem: "Hello World"</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => {
-          setGetItemValue(simpleJsiModule.getItem("helloworld"));
+          setGetItemValue(simpleJsiModule.getItem('helloworld'));
         }}
-        style={styles.button}
-      >
-        <Text style={styles.buttonTxt}>
-          getItem: {getItemValue}
-        </Text>
+        style={styles.button}>
+        <Text style={styles.buttonTxt}>getItem: {getItemValue}</Text>
       </TouchableOpacity>
-
-
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -76,11 +62,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:5,
-    marginVertical:10
-
+    borderRadius: 5,
+    marginVertical: 10,
   },
   buttonTxt: {
-    color: "white"
-  }
+    color: 'white',
+  },
 });
