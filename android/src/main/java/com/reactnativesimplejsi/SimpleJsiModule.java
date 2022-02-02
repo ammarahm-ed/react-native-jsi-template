@@ -37,14 +37,12 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
     System.loadLibrary("cpp");
     JavaScriptContextHolder jsContext = getReactApplicationContext().getJavaScriptContextHolder();
 
-    if (jsContext != 0) {
+    if (jsContext.get() != 0) {
       this.nativeInstall(
         jsContext.get()
       );
-      return true;
     } else {
       Log.e("SimpleJsiModule", "JSI Runtime is not available in debug mode");
-      return false;
     }
 
   }
