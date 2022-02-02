@@ -31,9 +31,8 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
 
 // Installing JSI Bindings as done by
 // https://github.com/mrousavy/react-native-mmkv
-  @ReactMethod(isBlockingSynchronousMethod = true)
-  public void install() {
-
+   @ReactMethod(isBlockingSynchronousMethod = true)
+  public boolean install() {
     System.loadLibrary("cpp");
     JavaScriptContextHolder jsContext = getReactApplicationContext().getJavaScriptContextHolder();
 
@@ -41,8 +40,10 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
       this.nativeInstall(
         jsContext.get()
       );
+      return true;
     } else {
       Log.e("SimpleJsiModule", "JSI Runtime is not available in debug mode");
+      return false;
     }
 
   }
