@@ -36,10 +36,9 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(install)
     if (jsiRuntime == nil) {
         return @false;
     }
-    auto& runtime = *jsiRuntime;
 
-    example::install(*(facebook::jsi::Runtime *)runtime);
-    install(*(facebook::jsi::Runtime *)runtime, self);
+    example::install(*(facebook::jsi::Runtime *)jsiRuntime);
+    install(*(facebook::jsi::Runtime *)jsiRuntime, self);
   
    
     return @true;
