@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "How to build a jsi module example library",
   "main": "./src/index.ts",
+  "source": "src/index",
   "files": [
     "src",
     "lib",

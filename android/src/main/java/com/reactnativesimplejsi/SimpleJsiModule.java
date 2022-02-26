@@ -16,6 +16,7 @@ import com.facebook.react.bridge.ReactMethod;
 @ReactModule(name = SimpleJsiModule.NAME)
 public class SimpleJsiModule extends ReactContextBaseJavaModule {
   public static final String NAME = "SimpleJsi";
+  private static native void nativeInstall(long jsiPtr, String docDir);
 
   public SimpleJsiModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -27,26 +28,20 @@ public class SimpleJsiModule extends ReactContextBaseJavaModule {
     return NAME;
   }
 
-  private native void nativeInstall(long jsi);
-
-// Installing JSI Bindings as done by
-// https://github.com/mrousavy/react-native-mmkv
   @ReactMethod(isBlockingSynchronousMethod = true)
-  public void install() {
+  public boolean install() {
+    try {
+      System.loadLibrary("cpp");
 
-    System.loadLibrary("cpp");
-    JavaScriptContextHolder jsContext = getReactApplicationContext().getJavaScriptContextHolder();
-
-    if (jsContext != 0) {
-      this.nativeInstall(
-        jsContext.get()
+      ReactApplicationContext context = getReactApplicationContext();
+      nativeInstall(
+        context.getJavaScriptContextHolder().get(),
+        context.getFilesDir().getAbsolutePath()
       );
       return true;
-    } else {
-      Log.e("SimpleJsiModule", "JSI Runtime is not available in debug mode");
+    } catch (Exception exception) {
       return false;
     }
-
   }
 
   public String getModel() {

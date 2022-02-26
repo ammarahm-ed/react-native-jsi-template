@@ -13,6 +13,7 @@ include_directories(
 )
 
 file (GLOB LIBRN_DIR "${BUILD_DIR}/react-native-0*/jni/${ANDROID_ABI}")
+message(STATUS "LIBRN_DIR: ${LIBRN_DIR}")
 
 if (EXISTS "${LIBRN_DIR}/libjsi.so")
   # React Native 0.66.x and above
