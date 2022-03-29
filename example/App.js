@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, NativeModules} from 'react-native';
 import simpleJsiModule, {isLoaded} from 'react-native-jsi-template';
 
 export default function App() {
@@ -39,6 +39,18 @@ export default function App() {
         }}
         style={styles.button}>
         <Text style={styles.buttonTxt}>getItem: {getItemValue}</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          simpleJsiModule.foo((error, result) => {
+            console.log('error:', error, 'result:', result);
+          });
+        }}
+        style={styles.button}>
+        <Text style={styles.buttonTxt}>
+          Async callback (Runs on seperate thread in c++)
+        </Text>
       </TouchableOpacity>
     </View>
   );

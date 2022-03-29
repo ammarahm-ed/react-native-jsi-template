@@ -18,6 +18,7 @@ const simpleJsiModule: {
   getDeviceName(): string;
   setItem(key: string, value: string): boolean;
   getItem(key: string): string;
+  foo(callback:(error:string | undefined,value:string | undefined) => void):void
   //@ts-ignore
 } = global;
 
@@ -26,8 +27,8 @@ export function isLoaded() {
 }
 
 if (!isLoaded()) {
-  const result = NativeModules.SimpleJsi.install();
-  if (!result)
+  const result = NativeModules.SimpleJsi?.install();
+  if (!result && !isLoaded())
     throw new Error('JSI bindings were not installed for: SimpleJsi Module');
 
   if (!isLoaded()) {
