@@ -16,7 +16,7 @@ import com.facebook.react.bridge.ReactMethod;
 @ReactModule(name = SimpleJsiModule.NAME)
 public class SimpleJsiModule extends ReactContextBaseJavaModule {
   public static final String NAME = "SimpleJsi";
-  private static native void nativeInstall(long jsiPtr, String docDir);
+  private native void nativeInstall(long jsiPtr, String docDir);
 
   public SimpleJsiModule(ReactApplicationContext reactContext) {
     super(reactContext);
